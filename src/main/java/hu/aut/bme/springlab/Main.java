@@ -17,9 +17,7 @@ public class Main {
             var request  = HttpRequest.newBuilder(new URI(DATA_URL)).build();
             csvdata = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
             var mapper = new CountryMapper();
-            csvdata.lines().skip(1).filter(line -> line.startsWith("\"")).map(mapper::mapToCountryData)
-                    .toList();
-            //System.out.println(csvdata);
+            csvdata.lines().skip(1).filter(line -> !line.startsWith("\"")).map(mapper::mapToCountryData).forEach(cd -> System.out.println(cd));
         }
     }
 }
